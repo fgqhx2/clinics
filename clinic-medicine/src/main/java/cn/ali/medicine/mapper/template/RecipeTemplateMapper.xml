@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-A.m"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ali.medicine.mapper.template.RecipeTemplateMapper">
+    <select id="findAllRecipeTemplate" resultType="cn.ali.medicine.pojo.template.RecipeTemplate">
+        select * from recipe_template
+        <where>
+            <if test="recipeType != null ">
+                and recipeType=#{recipeType}
+            </if>
+            <if test="authority != null">
+                and authority=#{authority}
+            </if>
+            <if test="templateNameOrTemplateNo != null">
+                and templateName like  concat('%',#{templateNameOrTemplateNo}'%')
+                 or templateNo like concat('%',#{templateNameOrTemplateNo}'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findRecipeTemplateById" resultType="cn.ali.medicine.pojo.template.RecipeTemplate">
+        select * from recipe_template where id=#{id}
+    </select>
+
+    <select id="findAllRecipeTemplateContentByRtId" resultType="cn.ali.medicine.pojo.template.RecipeTemplateContent">
+        select  r.`id`,r.drugId,r.`groupId`,r.rtId ,d.`name`, d.`a_single_dose`,aut.`typeName` aunit,uid.`typeName` usages,r.`frequency`,r.`gross` ,grs.`typeName` gross_unit,d.`retail_price`
+        from recipe_template_content r
+        left join drug d on d.id=r.drugId
+        left join dictionary uid on uid.`id`=d.`usageId`
+        left join dictionary aut on aut.`id`=d.`a_single_dosea_unit`
+        left join dictionary grs on grs.`id`=d.`gross_unitId`
+        where rtId=#{rtId}
+    </select>
+    <select id="findAllInspectionItems" resultType="cn.ali.medicine.pojo.template.InspectionItems">
+        select * from inspection_items
+    </select>
+    <select id="findAllInspectionItemsContentByRtId" resultType="cn.ali.medicine.pojo.template.InspectionItemsContent">
+        select iic.`id`,ii.`name` checkName,iic.checkId,iic.rtId,iic.`part`,iic.`num`,ii.`unit`,ii.`type`,ii.`unit_price`
+        from `inspection_items_content` iic
+        left join `inspection_items` ii on ii.id=iic.checkId
+        where iic.rtid=#{rtId}
+    </select>
+
+    <select id="findAllAdditionalCharge" resultType="cn.ali.medicine.pojo.template.AdditionalCharge">
+        select * from `additional_charge`
+    </select>
+    
+    <select id="findAllAdditionalChargeContentByRtId" resultType="cn.ali.medicine.pojo.template.AdditionalCharge">
+        select ac.`id`,ac.`name`,ra.acId,,ra.`num`,ac.`price` from me_recipe_template_additional_charge ra
+        inner join additional_charge ac   on ra.`acId`=ac.`id`
+        where ra.`rtId`=#{rtId}
+    </select>
+
+</mapper>    

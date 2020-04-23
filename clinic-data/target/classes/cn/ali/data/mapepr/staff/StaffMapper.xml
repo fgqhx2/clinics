@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-A.m"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ali.data.mapepr.staff.StaffMapper">
+    <select id="findStaffByName" resultType="cn.ali.data.pojo.Staff">
+        select s.*,r.`name` role ,d.`name` departmentName  from sys_staff s
+        left join sys_role_staff rs on rs.`sid`=s.`id`
+        left join sys_role r on r.`id`=rs.`rid`
+        left join department d on d.`id`=s.`department_id`
+        <where>
+            <if test="name != null">
+                and s.name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findStaffById" resultType="cn.ali.data.pojo.Staff">
+        select s.*,r.`name` role ,d.`name` departmentName  from sys_staff s
+        left join sys_role_staff rs on rs.`sid`=s.`id`
+        left join sys_role r on r.`id`=rs.`rid`
+        left join department d on d.`id`=s.`department_id`
+       where s.id =#{id}
+    </select>
+</mapper>    

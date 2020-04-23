@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-A.m"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ali.outpatient.mapper.OutpatientMapper">
+    <insert id="saveAdditionalCharge" >
+        insert `additional_charge`(`recipeId`,`name`,`num`,`price`)
+        values(#{recipeId},#{name},#{num},#{price})
+    </insert>
+    <insert id="saveOutpatient" useGeneratedKeys="true" keyProperty="id">
+        insert `outpatient` (`code`,`patientId`,`doctor`,`department`,
+        `receptionType`,`diagnose`,`advice`,`creation_time`)
+        values (#{code},#{patientId},#{doctor},#{department},#{receptionType},#{diagnose},#{advice},#{creation_time})
+    </insert>
+    <insert id="saveOutpatientCharges" >
+        insert `outpatient_charges` (`receptionId`,`receivables`,`discount_amount`,
+        `discount`,`medicare_payments`,`money_received`,`change`,`payType`,`remark`)
+         values (#{receptionId},#{receivables},#{discount_amount},#{discount},#{medicare_payments},
+         #{money_received},#{change},#{payType},#{remark})
+    </insert>
+
+    <insert id="saveRecipe" useGeneratedKeys="true" keyProperty="id" >
+        insert `recipe` (`receptionId`,`recipeName`) values (#{receptionId},#{recipeName})
+    </insert>
+
+    <insert id="saveRecipeContent">
+        insert `recipe_content` (`groupId`,`rtId`,`drugId`,`drugName`,`a_single_dose`,
+        `a_single_dose_unit`,`frequency`,`gross`,`gross_unitId`,`unit_price`,`money`,
+        `discount`,`discount_money`)
+        values (#{groupId},#{rtId},#{drugId},#{drugName},#{a_single_dose},#{a_single_dose_unit},
+        #{frequency},#{gross},#{gross_unitId},#{unit_price},#{money},#{discount},#{discount_money})
+
+    </insert>
+    <insert id="saveInspectionItemsContent" >
+        insert `inspection_items_content` (`outpatientId`,`part`,`name`,`num`,`unit`,`type`,`money`,`remark`)
+        values (#{outpatientId},#{part},#{name},#{num},#{unit},#{type},#{money},#{remark})
+    </insert>
+    <select id="findAdvice" resultType="cn.ali.outpatient.pojo.Advice">
+        select * from advice
+    </select>
+    <select id="findDiagnose" resultType="cn.ali.outpatient.pojo.Diagnose">
+        select * from diagnose
+    </select>
+</mapper>

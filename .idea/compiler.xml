@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="clinic-medicine" />
+        <module name="clinic-auth" />
+        <module name="clinic-data" />
+        <module name="clinic-common" />
+        <module name="clinic-outpatient_service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="clinic-auth" options="-parameters" />
+      <module name="clinic-common" options="-parameters" />
+      <module name="clinic-data" options="-parameters" />
+      <module name="clinic-medicine" options="-parameters" />
+      <module name="clinic-outpatient_service" options="-parameters" />
+    </option>
+  </component>
+</project>

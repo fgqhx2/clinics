@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-A.m" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ali.auth.mepper.UserMapper">
+    <select id="findUserByUserName" resultType="cn.ali.auth.pojo.User">
+        select * from`sys_staff` where username=#{username}
+    </select>
+    <select id="findRoleByUserId" resultType="cn.ali.auth.pojo.Role">
+        select r.*  from sys_role r
+        left join sys_role_staff rs on r.`id`= rs.`rid`
+        where rs.`sid`=#{id}
+    </select>
+    <select id="findPermissionByRoleId" resultType="cn.ali.auth.pojo.Permission">
+        select p.* from sys_permission p
+        left join sys_permission_role pr on pr.pid=p.id
+        where pr.rid=#{id}
+    </select>
+</mapper>
